@@ -20,7 +20,7 @@ function ContactForm({ onAddContact }) {
         }
 
         const nuevoContacto = {
-            id: Date.now(), //ID único basado en timestamp
+            id: Date.now(), //ID basado en timestamp
             nombre,
             apellido,
             provincia,
