@@ -48,22 +48,36 @@ function ContactForm({ onAddContact }) {
                 <Form onSubmit={handleSubmit}>
                     <Row className="mb-3">
                         <Col>
-                            <Form.Group controlId="formNombre">
+                            <Form.Group className="mb-3" controlId="formNombre">
                                 <Form.Label>Nombre</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={nombre}
-                                    onChange={(e) => setNombre(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$/.test(value)) {
+                                            setNombre(value);
+                                        }
+                                    }}
+                                    maxLength={30}
+                                    placeholder="Ej: Juan"
                                 />
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group controlId="formApellido">
+                            <Form.Group className="mb-3" controlId="formApellido">
                                 <Form.Label>Apellido</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={apellido}
-                                    onChange={(e) => setApellido(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$/.test(value)) {
+                                            setApellido(value);
+                                        }
+                                    }}
+                                    maxLength={30}
+                                    placeholder="Ej: Pérez"
                                 />
                             </Form.Group>
                         </Col>
@@ -71,22 +85,36 @@ function ContactForm({ onAddContact }) {
 
                     <Row className="mb-3">
                         <Col>
-                            <Form.Group controlId="formProvincia">
+                            <Form.Group className="mb-3" controlId="formProvincia">
                                 <Form.Label>Provincia</Form.Label>
                                 <Form.Control
                                     type="text"
                                     value={provincia}
-                                    onChange={(e) => setProvincia(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$/.test(value)) {
+                                            setProvincia(value);
+                                        }
+                                    }}
+                                    maxLength={30}
+                                    placeholder="Ej: Tucumán"
                                 />
                             </Form.Group>
                         </Col>
                         <Col>
-                            <Form.Group controlId="formTelefono">
+                            <Form.Group className="mb-3" controlId="formTelefono">
                                 <Form.Label>Teléfono</Form.Label>
                                 <Form.Control
-                                    type="text"
+                                    type="tel"
                                     value={telefono}
-                                    onChange={(e) => setTelefono(e.target.value)}
+                                    onChange={(e) => {
+                                        const value = e.target.value;
+                                        if (/^\d*$/.test(value)) {
+                                            setTelefono(value);
+                                        }
+                                    }}
+                                    maxLength={10}
+                                    placeholder="Ej: 3811234567"
                                 />
                             </Form.Group>
                         </Col>
