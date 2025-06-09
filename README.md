@@ -74,7 +74,8 @@ No requiere instalación ni registro.
 
 * Se eligió **localStorage** por simplicidad, evitando dependencias de backend o bases de datos externas.
 * Se usaron **modales con React-Bootstrap** para edición sin navegar fuera de la página.
-* Cada contacto se gestiona mediante su posición en el array (`index`). En una versión futura, podría usarse un `id` único para mayor robustez.
+* Cada contacto se gestiona mediante su posición en el array (`index`). En una versión futura, podría usarse el `id` único para mayor robustez.
+* Se utilizó la libreria `axios` para consumir la API `https://apis.datos.gob.ar/georef/api/provincias` que trae las provincias de Argentina y permite seleccionarlas en el formulario.
 
 ---
 ## Contacto
