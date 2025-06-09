@@ -11,8 +11,8 @@ Permite agregar, listar, editar y eliminar contactos, utilizando almacenamiento 
 ### 1. Cloná o descargá este repositorio:
 
 ```bash
-git clone https://github.com/MarianoGirbau/asignaciontecnica-agenda.git
-cd asignaciontecnica-agenda
+git clone https://github.com/MarianoGirbau/AsignacionTecnica-Agenda.git
+cd AsignacionTecnica-Agenda
 ```
 
 ### 2. Instalá las dependencias:
