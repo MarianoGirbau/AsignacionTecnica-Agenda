@@ -2,12 +2,13 @@ import { useState } from "react";
 import { Form, Button, Row, Col, Card } from "react-bootstrap";
 import Swal from "sweetalert2";
 
-function ContactForm({ onAddContact }) {
+function ContactForm({ onAddContact, provincias }) {
     const [nombre, setNombre] = useState("");
     const [apellido, setApellido] = useState("");
     const [provincia, setProvincia] = useState("");
     const [telefono, setTelefono] = useState("");
 
+    
     const handleSubmit = (e) => {
         e.preventDefault();
 
@@ -34,7 +35,6 @@ function ContactForm({ onAddContact }) {
             title: "Contacto agregado!",
         });
 
-        //Limpiar campos
         setNombre("");
         setApellido("");
         setProvincia("");
@@ -53,12 +53,7 @@ function ContactForm({ onAddContact }) {
                                 <Form.Control
                                     type="text"
                                     value={nombre}
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        if (/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$/.test(value)) {
-                                            setNombre(value);
-                                        }
-                                    }}
+                                    onChange={(e) => setNombre(e.target.value)}
                                     maxLength={30}
                                     placeholder="Ej: Juan"
                                 />
@@ -70,12 +65,7 @@ function ContactForm({ onAddContact }) {
                                 <Form.Control
                                     type="text"
                                     value={apellido}
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        if (/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$/.test(value)) {
-                                            setApellido(value);
-                                        }
-                                    }}
+                                    onChange={(e) => setApellido(e.target.value)}
                                     maxLength={30}
                                     placeholder="Ej: Pérez"
                                 />
@@ -85,34 +75,30 @@ function ContactForm({ onAddContact }) {
 
                     <Row className="mb-3">
                         <Col>
-                            <Form.Group className="mb-3" controlId="formProvincia">
+                            <Form.Group className="mb-3">
                                 <Form.Label>Provincia</Form.Label>
-                                <Form.Control
-                                    type="text"
+                                <Form.Select
+                                    name="provincia"
                                     value={provincia}
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        if (/^[A-Za-zÁÉÍÓÚáéíóúÑñ\s]*$/.test(value)) {
-                                            setProvincia(value);
-                                        }
-                                    }}
-                                    maxLength={30}
-                                    placeholder="Ej: Tucumán"
-                                />
+                                    onChange={(e) => setProvincia(e.target.value)}
+                                    required
+                                >
+                                    <option value="">Seleccioná una provincia</option>
+                                    {provincias.map((provincia, index) => (
+                                        <option key={index} value={provincia}>
+                                            {provincia}
+                                        </option>
+                                    ))}
+                                </Form.Select>
                             </Form.Group>
                         </Col>
                         <Col>
                             <Form.Group className="mb-3" controlId="formTelefono">
                                 <Form.Label>Teléfono</Form.Label>
                                 <Form.Control
-                                    type="tel"
+                                    type="number"
                                     value={telefono}
-                                    onChange={(e) => {
-                                        const value = e.target.value;
-                                        if (/^\d*$/.test(value)) {
-                                            setTelefono(value);
-                                        }
-                                    }}
+                                    onChange={(e) => {setTelefono(e.target.value)}}
                                     maxLength={10}
                                     placeholder="Ej: 3811234567"
                                 />

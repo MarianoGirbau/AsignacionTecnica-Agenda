@@ -5,16 +5,18 @@ import { Container } from "react-bootstrap";
 import ContactForm from './components/ContactForm.jsx';
 import ContactTable from "./components/ContactTable.jsx";
 import EditContactModal from "./components/EditModal";
+import axios from 'axios';
 import Swal from 'sweetalert2';
 
 function App() {
   const [contacts, setContacts] = useState(() => {
-  const storedContacts = localStorage.getItem('contacts');
-  return storedContacts ? JSON.parse(storedContacts) : [];
-});
+    const storedContacts = localStorage.getItem('contacts');
+    return storedContacts ? JSON.parse(storedContacts) : [];
+  });
   const [editingIndex, setEditingIndex] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [contactToEdit, setContactToEdit] = useState({});
+  const [provincias, setProvincias] = useState([]);
 
 
   useEffect(() => {
@@ -27,6 +29,18 @@ function App() {
   useEffect(() => {
     localStorage.setItem("contacts", JSON.stringify(contacts));
   }, [contacts]);
+
+  useEffect(() => {
+    axios
+      .get('https://apis.datos.gob.ar/georef/api/provincias')
+      .then((res) => {
+        const nombres = res.data.provincias.map((prov) => prov.nombre);
+        setProvincias(nombres.sort());
+      })
+      .catch((err) => {
+        console.error('Error al obtener las provincias:', err);
+      });
+  }, []);
 
   const handleAddContact = (contacto) => {
     setContacts([...contacts, contacto]);
@@ -57,26 +71,26 @@ function App() {
   };
 
   const handleSaveEditedContact = (updatedContact) => {
-  const updatedContacts = [...contacts];
-  updatedContacts[editingIndex] = updatedContact;
-  setContacts(updatedContacts);
-  setShowModal(false);
+    const updatedContacts = [...contacts];
+    updatedContacts[editingIndex] = updatedContact;
+    setContacts(updatedContacts);
+    setShowModal(false);
 
-  Swal.fire({
-    icon: 'success',
-    title: 'Contacto actualizado',
-    text: 'Los datos fueron modificados correctamente.',
-    timer: 2000,
-    showConfirmButton: false,
-  });
-};
+    Swal.fire({
+      icon: 'success',
+      title: 'Contacto actualizado',
+      text: 'Los datos fueron modificados correctamente.',
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  };
 
 
   return (
     <div className="App">
       <Container className="mt-4">
         <h1 className="mb-4">Agenda de Contactos</h1>
-        <ContactForm onAddContact={handleAddContact} />
+        <ContactForm onAddContact={handleAddContact} provincias={provincias} />
       </Container>
       <ContactTable
         contacts={contacts}
@@ -88,6 +102,7 @@ function App() {
         handleClose={() => setShowModal(false)}
         contact={contactToEdit}
         onSave={handleSaveEditedContact}
+        provincias={provincias}
       />
     </div>
   );

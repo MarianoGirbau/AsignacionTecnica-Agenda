@@ -1,7 +1,7 @@
 import { Modal, Button, Form } from "react-bootstrap";
 import { useState, useEffect } from "react";
 
-const EditContactModal = ({ show, handleClose, contact, onSave }) => {
+const EditContactModal = ({ show, handleClose, contact, onSave, provincias }) => {
   const [editedContact, setEditedContact] = useState({ ...contact });
 
   useEffect(() => {
@@ -32,11 +32,6 @@ const EditContactModal = ({ show, handleClose, contact, onSave }) => {
               name="nombre"
               value={editedContact.nombre}
               onChange={handleChange}
-              onKeyPress={(e) => {
-                if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]$/.test(e.key)) {
-                  e.preventDefault();
-                }
-              }}
               required
               maxLength={30}
             />
@@ -48,11 +43,6 @@ const EditContactModal = ({ show, handleClose, contact, onSave }) => {
               name="apellido"
               value={editedContact.apellido}
               onChange={handleChange}
-              onKeyPress={(e) => {
-                if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]$/.test(e.key)) {
-                  e.preventDefault();
-                }
-              }}
               required
               maxLength={30}
             />
@@ -60,34 +50,30 @@ const EditContactModal = ({ show, handleClose, contact, onSave }) => {
 
           <Form.Group className="mb-3">
             <Form.Label>Provincia</Form.Label>
-            <Form.Control
+            <Form.Select
               name="provincia"
               value={editedContact.provincia}
               onChange={handleChange}
-              onKeyPress={(e) => {
-                if (!/^[a-zA-ZáéíóúÁÉÍÓÚñÑ\s]$/.test(e.key)) {
-                  e.preventDefault();
-                }
-              }}
               required
-              maxLength={30}
-            />
+            >
+              <option value="">Seleccioná una provincia</option>
+              {provincias.map((provincia, index) => (
+                <option key={index} value={provincia}>
+                  {provincia}
+                </option>
+              ))}
+            </Form.Select>
           </Form.Group>
 
           <Form.Group className="mb-3">
             <Form.Label>Teléfono</Form.Label>
             <Form.Control
               name="telefono"
+              type="number"
               value={editedContact.telefono}
               onChange={handleChange}
-              onKeyPress={(e) => {
-                if (!/[0-9]/.test(e.key)) {
-                  e.preventDefault();
-                }
-              }}
               required
               maxLength={10}
-              inputMode="numeric"
             />
           </Form.Group>
 
